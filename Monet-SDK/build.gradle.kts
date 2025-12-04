@@ -1,9 +1,96 @@
-import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     id("com.vanniktech.maven.publish")
+    signing
+}
+
+//mavenPublishing {
+//    publishToMavenCentral()
+//    signAllPublications()
+//
+//    coordinates("io.github.buiduchai-dev", "monet-sdk", "1.0.0-SNAPSHOT")
+//
+//    pom {
+//        name.set("Monet SDK")
+//        description.set("Monet SDK")
+//        inceptionYear.set("2025")
+//        url.set("https://github.com/BuiDucHai-dev/TCC-Monet")
+//        licenses {
+//            license {
+//                name.set("The Apache License, Version 2.0")
+//                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+//                distribution.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+//            }
+//        }
+//        developers {
+//            developer {
+//                id.set("BuiDucHai-dev")
+//                name.set("Bui Duc Hai")
+//                url.set("https://github.com/BuiDucHai-dev/")
+//            }
+//        }
+//        scm {
+//            url.set("https://github.com/BuiDucHai-dev/TCC-Monet")
+//            connection.set("scm:git:git://github.com/BuiDucHai-dev/TCC-Monet.git")
+//            developerConnection.set("scm:git:ssh://git@github.com/BuiDucHai-dev/TCC-Monet.git")
+//        }
+//    }
+//}
+
+mavenPublishing {
+    publishToMavenCentral()
+
+    signAllPublications()
+
+    coordinates("io.github.buiduchai-dev", "monet-sdk", "1.0.0-SNAPSHOT")
+
+    pom {
+        name = "Monet SDK"
+        description = "Monet SDK"
+        inceptionYear = "2025"
+        url = "https://github.com/BuiDucHai-dev/TCC-Monet"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "BuiDucHai-dev"
+                name = "Bui Duc Hai"
+                url = "https://github.com/BuiDucHai-dev"
+            }
+        }
+        scm {
+            url = "https://github.com/BuiDucHai-dev/TCC-Monet"
+            connection = "scm:git:git://github.com/BuiDucHai-dev/TCC-Monet.git"
+            developerConnection = "scm:git:ssh://git@github.com/BuiDucHai-dev/TCC-Monet.git"
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+            credentials {
+                username = providers.gradleProperty("mavenCentralUsername").get()
+                password = providers.gradleProperty("mavenCentralPassword").get()
+            }
+        }
+    }
+}
+
+signing {
+    setRequired {
+        !gradle.taskGraph.allTasks.any { it is PublishToMavenLocal }
+    }
+//    isRequired.set(!gradle.taskGraph.allTasks.any { it.name == "publishToMavenLocal" })
+    sign(publishing.publications)
 }
 
 android {
@@ -32,36 +119,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
-    }
-}
-
-mavenPublishing {
-    coordinates("io.github.buiduchai-dev", "monet-sdk", "1.0.0-SNAPSHOT")
-
-    pom {
-        name.set("Monet SDK")
-        description.set("Monet SDK")
-        inceptionYear.set("2025")
-        url.set("https://github.com/BuiDucHai-dev/tcc-monet-sdk")
-        licenses {
-            license {
-                name.set("The Apache License, Version 2.0")
-                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                distribution.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-            }
-        }
-        developers {
-            developer {
-                id.set("username")
-                name.set("User Name")
-                url.set("https://github.com/username/")
-            }
-        }
-        scm {
-            url.set("https://github.com/username/mylibrary/")
-            connection.set("scm:git:git://github.com/username/mylibrary.git")
-            developerConnection.set("scm:git:ssh://git@github.com/username/mylibrary.git")
-        }
     }
 }
 
