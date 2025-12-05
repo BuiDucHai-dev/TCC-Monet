@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.release
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -5,45 +7,12 @@ plugins {
     signing
 }
 
-//mavenPublishing {
-//    publishToMavenCentral()
-//    signAllPublications()
-//
-//    coordinates("io.github.buiduchai-dev", "monet-sdk", "1.0.0-SNAPSHOT")
-//
-//    pom {
-//        name.set("Monet SDK")
-//        description.set("Monet SDK")
-//        inceptionYear.set("2025")
-//        url.set("https://github.com/BuiDucHai-dev/TCC-Monet")
-//        licenses {
-//            license {
-//                name.set("The Apache License, Version 2.0")
-//                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-//                distribution.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-//            }
-//        }
-//        developers {
-//            developer {
-//                id.set("BuiDucHai-dev")
-//                name.set("Bui Duc Hai")
-//                url.set("https://github.com/BuiDucHai-dev/")
-//            }
-//        }
-//        scm {
-//            url.set("https://github.com/BuiDucHai-dev/TCC-Monet")
-//            connection.set("scm:git:git://github.com/BuiDucHai-dev/TCC-Monet.git")
-//            developerConnection.set("scm:git:ssh://git@github.com/BuiDucHai-dev/TCC-Monet.git")
-//        }
-//    }
-//}
-
 mavenPublishing {
     publishToMavenCentral()
 
     signAllPublications()
 
-    coordinates("io.github.buiduchai-dev", "monet-sdk", "1.0.0-SNAPSHOT")
+    coordinates("io.github.buiduchai-dev", "monet-sdk", "1.0.0")
 
     pom {
         name = "Monet SDK"
@@ -72,18 +41,29 @@ mavenPublishing {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "OSSRH"
-            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
-            credentials {
-                username = providers.gradleProperty("mavenCentralUsername").get()
-                password = providers.gradleProperty("mavenCentralPassword").get()
-            }
-        }
-    }
-}
+//publishing {
+//    publications {
+//        create<MavenPublication>("release") {
+//            groupId = "io.github.buiduchai-dev"
+//            artifactId = "monet-sdk"
+//            version = "1.0.0"
+//
+//            afterEvaluate {
+//                from(components["release"])
+//            }
+//        }
+//    }
+//    repositories {
+//        maven {
+//            name = "OSSRH"
+//            url = uri("https://central.sonatype.com/repository/maven/")
+//            credentials {
+//                username = providers.gradleProperty("mavenCentralUsername").get()
+//                password = providers.gradleProperty("mavenCentralPassword").get()
+//            }
+//        }
+//    }
+//}
 
 signing {
     setRequired {

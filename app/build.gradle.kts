@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":Monet-SDK"))
+//    implementation(project(":Monet-SDK"))
 
     implementation("com.intuit.sdp:sdp-android:1.1.1")
 
@@ -50,4 +50,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation("io.github.buiduchai-dev:monet-sdk:1.0.0")
 }
